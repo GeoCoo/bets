@@ -1,0 +1,38 @@
+[
+  {
+    "type": "Winning team",
+    "sellIn": 10,
+    "odds": 20,
+    "image": "https://i.imgur.com/mx66SBD.jpeg"
+  },
+  {
+    "type": "Total score",
+    "sellIn": 2,
+    "odds": 0,
+    "image": "https://i.imgur.com/VnPRqcv.jpeg"
+  },
+  {
+    "type": "Player performance",
+    "sellIn": 5,
+    "odds": 7,
+    "image": "https://i.imgur.com/Urpc00H.jpeg"
+  },
+  {
+    "type": "First goal scorer",
+    "sellIn": 0,
+    "odds": 80,
+    "image": "https://i.imgur.com/Wy94Tt7.jpeg"
+  },
+  {
+    "type": "Number of fouls",
+    "sellIn": 5,
+    "odds": 49,
+    "image": "https://i.imgur.com/NMLpcKj.jpeg"
+  },
+  {
+    "type": "Corner kicks",
+    "sellIn": 3,
+    "odds": 6,
+    "image": "https://i.imgur.com/TiJ8y5l.jpeg"
+  }
+]
