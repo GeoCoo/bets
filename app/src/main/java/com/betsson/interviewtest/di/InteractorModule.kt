@@ -1,8 +1,8 @@
 package com.betsson.interviewtest.di
 
 
-import com.betsson.interviewtest.screens.main.MainInteractor
-import com.betsson.interviewtest.screens.main.MainInteractorImpl
+import com.betsson.interviewtest.screens.bets.MainInteractor
+import com.betsson.interviewtest.screens.bets.MainInteractorImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

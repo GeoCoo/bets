@@ -1,4 +1,4 @@
-package com.betsson.interviewtest.screens.main
+package com.betsson.interviewtest.screens.bets
 
 import com.betsson.interviewtest.model.Bet
 import com.betsson.interviewtest.networking.ApiClient

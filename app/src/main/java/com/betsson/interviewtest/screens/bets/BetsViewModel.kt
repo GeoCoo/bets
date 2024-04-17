@@ -1,17 +1,16 @@
-package com.betsson.interviewtest.screens.main
+package com.betsson.interviewtest.screens.bets
 
-import android.location.Location
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.android.sdsc.base.MviViewModel
 import com.android.sdsc.base.ViewEvent
 import com.android.sdsc.base.ViewSideEffect
 import com.android.sdsc.base.ViewState
 import com.betsson.interviewtest.model.Bet
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,6 +23,7 @@ data class State(
 sealed class Event : ViewEvent {
     data object GetInitBets : Event()
     data class UpdateOdds(val bets: List<Bet>?) : Event()
+    data class NavigateToSingleBet(val navController: NavController,val type: String) : Event()
 }
 
 sealed class Effect : ViewSideEffect {}
@@ -49,13 +49,11 @@ class MainViewModel @Inject constructor(
                                         isLoading = false,
                                         bets = null,
                                         errorMessage = it.errorMessage
-
                                     )
                                 }
                             }
 
                             is BetsPartialState.Success -> {
-
                                 setState {
                                     copy(
                                         isLoading = false,
@@ -66,8 +64,6 @@ class MainViewModel @Inject constructor(
                         }
 
                     }
-
-
                 }
             }
 
@@ -75,59 +71,15 @@ class MainViewModel @Inject constructor(
                 setState {
                     copy(
                         isLoading = false,
-                        bets = calculateOdds(event.bets)
+                        bets = mainInteractor.updateOdds(event.bets)
                     )
                 }
             }
+
+            is Event.NavigateToSingleBet -> {
+                mainInteractor.navigateToSingle(navController = event.navController,event.type)
+            }
         }
     }
-
 }
 
-fun calculateOdds(bets: List<Bet>?): List<Bet> {
-    val transformedBets = mutableListOf<Bet>()
-    bets?.forEachIndexed { _, bet ->
-        val updatedOdds = when {
-            bet.type != "Total score" && bet.type != "Number of fouls" && bet.odds > 0 && bet.type != "First goal scorer" -> bet.odds - 1
-            bet.type == "Total score" || bet.type == "Number of fouls" -> {
-                if (bet.odds < 50) {
-                    var updatedOdds = bet.odds + 1
-                    if (bet.type == "Number of fouls") {
-                        if (bet.sellIn < 11) {
-                            updatedOdds++
-                        }
-                        if (bet.sellIn < 6) {
-                            updatedOdds++
-                        }
-                    }
-                    updatedOdds
-                } else {
-                    bet.odds
-                }
-            }
-
-            else -> bet.odds
-        }
-        val updatedSellIn = if (bet.type != "First goal scorer") bet.sellIn - 1 else bet.sellIn
-        val updatedBet = if (updatedSellIn < 0) {
-            if (bet.type != "Total score" && bet.type != "Number of fouls" && bet.odds > 0 && bet.type != "First goal scorer") {
-                Bet(bet.type, updatedSellIn, updatedOdds - 1, bet.image)
-            } else if (bet.type == "Number of fouls") {
-                Bet(bet.type, updatedSellIn, 0, bet.image)
-            } else if (bet.type == "Total score") {
-                Bet(
-                    bet.type,
-                    updatedSellIn,
-                    if (bet.odds < 50) bet.odds + 1 else bet.odds,
-                    bet.image
-                )
-            } else {
-                Bet(bet.type, updatedSellIn, bet.odds, bet.image)
-            }
-        } else {
-            Bet(bet.type, updatedSellIn, updatedOdds, bet.image)
-        }
-        transformedBets.add(updatedBet)
-    }
-    return transformedBets
-}
