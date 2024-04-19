@@ -2,6 +2,9 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="MainActivity">
+        <State />
+      </entry>
       <entry key="app">
         <State>
           <targetSelectedWithDropDown>
@@ -10,13 +13,40 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="$USER_HOME$/.android/avd/Pixel_7_Pro_API_34.avd" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_7_API_31.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-17T14:26:20.582987Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-04-19T11:23:44.457506Z" />
         </State>
+      </entry>
+      <entry key="core-api">
+        <State />
+      </entry>
+      <entry key="core-data">
+        <State />
+      </entry>
+      <entry key="core-designsytem">
+        <State />
+      </entry>
+      <entry key="core-domain">
+        <State />
+      </entry>
+      <entry key="core-model">
+        <State />
+      </entry>
+      <entry key="core-resources">
+        <State />
+      </entry>
+      <entry key="core-ui">
+        <State />
+      </entry>
+      <entry key="featrure-main-screen">
+        <State />
+      </entry>
+      <entry key="feature-bets-screen">
+        <State />
       </entry>
     </value>
   </component>
