@@ -24,22 +24,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import coil.compose.rememberAsyncImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.betson.interviewTest.core_model.common.Model
-import com.betson.interviewTest.core_resources.R.*
+import com.betson.interviewTest.core_model.common.Bet
 import com.betson.interviewTest.core_ui.component.LifecycleEffect
 import com.betson.interviewTest.core_ui.component.LoadingIndicator
+import com.betson.interviewTest.core_resources.R
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BetsScreen() {
-    val viewModel = hiltViewModel<MainViewModel>()
+    val viewModel = hiltViewModel<BetsViewModel>()
     val state = viewModel.viewState
     LifecycleEffect(
         lifecycleOwner = LocalLifecycleOwner.current,
@@ -53,7 +55,7 @@ fun BetsScreen() {
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 titleContentColor = MaterialTheme.colorScheme.surfaceTint
-            ), title = { Text(text = state.value.appName) })
+            ), title = { Text(text = stringResource(id = R.string.app_name)) })
     }) { paddingValues ->
 
         if (state.value.isLoading) {
@@ -82,7 +84,7 @@ fun BetsScreen() {
 
 
 @Composable
-fun SingleListItem(item: Model) {
+fun SingleListItem(item: Bet) {
     Row(
         modifier = Modifier
             .padding(16.dp),
@@ -95,7 +97,7 @@ fun SingleListItem(item: Model) {
                     ImageRequest.Builder(LocalContext.current).data(it).memoryCacheKey(it)
                         .diskCacheKey(it).diskCachePolicy(CachePolicy.ENABLED)
                         .memoryCachePolicy(CachePolicy.ENABLED)
-                        .placeholder(drawable.ic_launcher_foreground)
+                        .placeholder(R.drawable.ic_launcher_foreground)
 
 
                 Image(

@@ -1,7 +1,7 @@
 package com.betsson.interviewtest.core_data.repository
 
 import com.betson.interviewtest.core_api.api.ApiClient
-import com.betson.interviewTest.core_model.common.Model
+import com.betson.interviewTest.core_model.common.Bet
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -26,6 +26,6 @@ class BetsRepositoryImpl @Inject constructor(private val apiClient: ApiClient) :
 }
 
 sealed class BetsResponse {
-    data class Success(val bets: List<Model>?) : BetsResponse()
+    data class Success(val bets: List<Bet>?) : BetsResponse()
     data class Failed(val errorMsg: String) : BetsResponse()
 }

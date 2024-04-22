@@ -1,0 +1,7 @@
+apply from: "$rootProject.projectDir/common/library-module.gradle"
+apply from: "$rootProject.projectDir/common/dependencies.gradle"
+apply from: "$rootProject.projectDir/common/modules.gradle"
+android {
+    namespace 'com.betson.interviewTests.core_tests'
+}
+

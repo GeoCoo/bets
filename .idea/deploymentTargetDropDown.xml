@@ -2,7 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="MainActivity">
+      <entry key="All Tests">
         <State />
       </entry>
       <entry key="app">
@@ -18,7 +18,7 @@
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-19T11:23:44.457506Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-04-22T16:44:25.815178Z" />
         </State>
       </entry>
       <entry key="core-api">
@@ -37,6 +37,9 @@
         <State />
       </entry>
       <entry key="core-resources">
+        <State />
+      </entry>
+      <entry key="core-tests">
         <State />
       </entry>
       <entry key="core-ui">

@@ -6,7 +6,7 @@ package com.betson.interviewTest.core_model.common
 //    }
 //}
 
-data class Model(var type: String, var sellIn: Int, var odds: Int, var image: String)
+data class Bet(var type: String, var sellIn: Int, var odds: Int, var image: String)
 
 object Route{
     const val BetsScreen = "BetsScreen"

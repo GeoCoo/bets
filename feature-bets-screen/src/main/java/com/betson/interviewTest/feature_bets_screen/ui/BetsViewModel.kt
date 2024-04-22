@@ -7,36 +7,34 @@ import com.android.sdsc.base.MviViewModel
 import com.android.sdsc.base.ViewEvent
 import com.android.sdsc.base.ViewSideEffect
 import com.android.sdsc.base.ViewState
-import com.betson.interviewTest.core_model.common.Model
+import com.betson.interviewTest.core_model.common.Bet
 import com.betson.interviewTest.core_resources.R.*
 import com.betson.interviewTest.core_resources.provider.ResourceProvider
-import com.betsson.interviewtest.core_domain.interactor.MainInteractor
+import com.betsson.interviewtest.core_domain.interactor.BetsInteractor
+import com.betsson.interviewtest.core_domain.interactor.BetsPartialState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 data class State(
-    var isLoading: Boolean = false, val bets: List<Model>? = listOf(),
+    var isLoading: Boolean = false, val bets: List<Bet>? = listOf(),
     val errorMessage: String? = "",
-    val appName: String = ""
 ) : ViewState
 
 sealed class Event : ViewEvent {
     data object GetInitBets : Event()
-    data class UpdateOdds(val bets: List<Model>?) : Event()
+    data class UpdateOdds(val bets: List<Bet>?) : Event()
 }
 
 sealed class Effect : ViewSideEffect {}
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    private val mainInteractor: MainInteractor,
-    private val resourceProvider: ResourceProvider
+class BetsViewModel @Inject constructor(
+    private val betsInteractor: BetsInteractor,
 ) : MviViewModel<Event, State, Effect>() {
     override fun setInitialState(): State = State(
         isLoading = true,
-        appName = resourceProvider.getString(string.app_name)
     )
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -44,9 +42,9 @@ class MainViewModel @Inject constructor(
         when (event) {
             is Event.GetInitBets -> {
                 viewModelScope.launch {
-                    mainInteractor.getBets().collect {
+                    betsInteractor.getBets().collect {
                         when (it) {
-                            is com.betsson.interviewtest.core_domain.interactor.BetsPartialState.Failed -> {
+                            is BetsPartialState.Failed -> {
                                 setState {
                                     copy(
                                         isLoading = false,
@@ -56,7 +54,7 @@ class MainViewModel @Inject constructor(
                                 }
                             }
 
-                            is com.betsson.interviewtest.core_domain.interactor.BetsPartialState.Success -> {
+                            is BetsPartialState.Success -> {
                                 setState {
                                     copy(
                                         isLoading = false,
@@ -74,7 +72,7 @@ class MainViewModel @Inject constructor(
                 setState {
                     copy(
                         isLoading = false,
-                        bets = mainInteractor.updateOdds(event.bets)
+                        bets = betsInteractor.updateOdds(event.bets)
                     )
                 }
             }
